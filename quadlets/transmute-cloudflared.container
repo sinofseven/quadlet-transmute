@@ -1,0 +1,22 @@
+[Unit]
+Description=Cloudflare Tunnel for transmute
+Requires=transmute-app.container
+After=transmute-app.container
+
+[Container]
+Image=docker.io/cloudflare/cloudflared:2026.8.2
+ContainerName=transmute-cloudflared
+Network=transmute-net.network
+
+Secret=transmute_cf_tunnel_token,type=mount,target=/run/secrets/cf_tunnel_token
+
+Exec=tunnel --no-autoupdate run --token-file /run/secrets/cf_tunnel_token
+
+NoNewPrivileges=true
+
+[Service]
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=default.target

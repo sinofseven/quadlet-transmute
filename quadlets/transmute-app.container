@@ -1,0 +1,21 @@
+[Unit]
+Description=app container for transmute
+
+[Container]
+Image=ghcr.io/transmute-app/transmute:v2.0.0
+ContainerName=transmute-app
+Network=transmute-net.network:alias=app
+
+Volume=transmute-data.volume:/app/data
+
+HealthCmd=["wget","-q","-O","/dev/null","--tries=1","http://localhost:3313/api/health/ready"]
+HealthInterval=30s
+HealthTimeout=10s
+HealthRetries=3
+HealthStartPeriod=40s
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

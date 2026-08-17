@@ -1,0 +1,6 @@
+[Unit]
+Description=Network for transmute
+
+[Network]
+NetworkName=transmute-net
+Driver=bridge
